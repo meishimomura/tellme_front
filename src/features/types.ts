@@ -26,3 +26,15 @@ export interface User {
   created_at: Date;
   updated_at: Date;
 }
+export interface loginUser {
+  uid: string;
+  email: string;
+  userName: string;
+  userImage: string;
+  schoolId: number;
+  groupId: number;
+  userIsStudent: boolean;
+}
+export interface authState {
+  loginUser: loginUser;
+}

@@ -1,10 +1,10 @@
 export interface SignUpParams {
-  user_name: string;
-  user_image: string;
+  userName: string;
+  userImage: string;
   email: string;
-  school_id: number;
-  group_id: number;
-  user_is_student: number;
+  schoolId: number;
+  groupId: number;
+  userIsStudent: number;
   password: string;
   passwordConfirmation: string;
 }
@@ -17,11 +17,11 @@ export interface User {
   uid: string;
   provider: string;
   email: string;
-  user_name: string;
-  user_image: string;
-  school_id: number;
-  group_id: number;
-  user_is_student: boolean;
+  userName: string;
+  userImage: string;
+  schoolId: number;
+  groupId: number;
+  userIsStudent: boolean;
   allowPasswordChange: boolean;
   created_at: Date;
   updated_at: Date;

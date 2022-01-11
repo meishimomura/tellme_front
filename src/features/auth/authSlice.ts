@@ -7,20 +7,55 @@ import { SignInParams, User, authState } from "../types";
 export const fetchAsyncSignIn = createAsyncThunk(
   "auth/signin",
   async (auth: SignInParams) => {
-    const res = await client.post<User | any>("auth/sign_in", auth);
+    const res = await client.post<any>("auth/sign_in", auth);
     return res;
   }
 );
 
+export const fetchAsyncGetUser = createAsyncThunk("auth/getUser", async () => {
+  const res = await client.get<loginUser>(
+    `${process.env.REACT_APP_API_URL}/auth/sessions/`,
+    {
+      headers: {
+        "access-token": `${Cookies.get("_access_token")}`,
+        client: `${Cookies.get("_client")}`,
+        uid: `${Cookies.get("_uid")}`,
+      },
+    }
+  );
+  return res.data;
+});
+
+export const fetchAsyncSignOut = createAsyncThunk("auth/sign_out", async () => {
+  const res = await client.delete(
+    `${process.env.REACT_APP_API_URL}/auth/sessions/`,
+    {
+      headers: {
+        "access-token": `${Cookies.get("_access_token")}`,
+        client: `${Cookies.get("_client")}`,
+        uid: `${Cookies.get("_uid")}`,
+      },
+    }
+  );
+  return res.data;
+});
+
 const initialState: authState = {
   loginUser: {
-    uid: "",
-    email: "",
-    userName: "",
-    userImage: "",
-    schoolId: 0,
-    groupId: 0,
-    userIsStudent: true,
+    is_login: false,
+    data: {
+      uid: "",
+      provider: "",
+      email: "";
+      userName: "",
+      userImage: "",
+      schoolId: 0,
+      groupId: 0,
+      userIsStudent: true,
+      allowPasswordChange: false,
+      created_at: new Date('01/01/70 00:00:00'),
+      updated_at: new Date('01/01/70 00:00:00'),
+    }
   },
 };
 
@@ -31,15 +66,34 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncSignIn.fulfilled,
-      (state, action: PayloadAction<User | any>) => {
-        console.log('action.payload.headers["access-token"]');
+      (state, action: PayloadAction<any>) => {
         Cookies.set("_access_token", action.payload.headers["access-token"]);
         Cookies.set("_client", action.payload.headers["client"]);
         Cookies.set("_uid", action.payload.headers["uid"]);
 
         window.location.href = "/home";
+      }
+    );
+    builder.addCase(
+      fetchAsyncGetUser.fulfilled,
+      (state, action: PayloadAction<loginUser>) => {
+        return {
+          ...state,
+          loginUser: action.payload,
+        };
+      }
+    );
+    builder.addCase(fetchAsyncGetUser.rejected, () => {
+      window.location.href = "/signin";
+    });
+    builder.addCase(
+      fetchAsyncSignIn.fulfilled,
+      () => {
+        Cookies.remove("_access_token")
+        Cookies.remove("_client")
+        Cookies.remove("_uid")
 
-        console.log("Signed in successfully!");
+        window.location.href = "/signin";
       }
     );
   },

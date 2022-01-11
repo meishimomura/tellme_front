@@ -27,13 +27,8 @@ export interface User {
   updated_at: Date;
 }
 export interface loginUser {
-  uid: string;
-  email: string;
-  userName: string;
-  userImage: string;
-  schoolId: number;
-  groupId: number;
-  userIsStudent: boolean;
+  is_login: boolean;
+  data: User;
 }
 export interface authState {
   loginUser: loginUser;

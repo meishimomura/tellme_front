@@ -61,7 +61,7 @@ export const Auth: React.FC = () => {
               margin="normal"
               required
               fullWidth
-              label="ID"
+              label="メールアドレス"
               type="text"
               name="email"
               value={credential.email}

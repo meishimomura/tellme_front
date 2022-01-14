@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import client from "lib/api/client";
 import Cookies from "js-cookie";
-import { SignInParams, User, authState } from "../types";
+import { SignInParams, User, loginUser, authState } from "../types";
 
 export const fetchAsyncSignIn = createAsyncThunk(
   "auth/signin",
@@ -46,16 +46,16 @@ const initialState: authState = {
     data: {
       uid: "",
       provider: "",
-      email: "";
+      email: "",
       userName: "",
       userImage: "",
       schoolId: 0,
       groupId: 0,
       userIsStudent: true,
       allowPasswordChange: false,
-      created_at: new Date('01/01/70 00:00:00'),
-      updated_at: new Date('01/01/70 00:00:00'),
-    }
+      created_at: new Date("01/01/70 00:00:00"),
+      updated_at: new Date("01/01/70 00:00:00"),
+    },
   },
 };
 
@@ -86,16 +86,13 @@ export const authSlice = createSlice({
     builder.addCase(fetchAsyncGetUser.rejected, () => {
       window.location.href = "/signin";
     });
-    builder.addCase(
-      fetchAsyncSignIn.fulfilled,
-      () => {
-        Cookies.remove("_access_token")
-        Cookies.remove("_client")
-        Cookies.remove("_uid")
+    builder.addCase(fetchAsyncSignOut.fulfilled, () => {
+      Cookies.remove("_access_token");
+      Cookies.remove("_client");
+      Cookies.remove("_uid");
 
-        window.location.href = "/signin";
-      }
-    );
+      window.location.href = "/signin";
+    });
   },
 });
 

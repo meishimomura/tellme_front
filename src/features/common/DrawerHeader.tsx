@@ -3,6 +3,8 @@ import { AppDispatch } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
+import { fetchAsyncSignOut } from "features/auth/authSlice";
+
 import styles from "features/common/DrawerHeader.module.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -24,6 +26,9 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import SensorDoorRoundedIcon from "@mui/icons-material/SensorDoorRounded";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
+import HelpIcon from "@mui/icons-material/Help";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
 
@@ -43,6 +48,10 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const logout = async () => {
+    await dispatch(fetchAsyncSignOut());
   };
 
   const current = {
@@ -149,12 +158,24 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
       </div>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>ああ</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button>
+          <ListItemIcon>
+            <SettingsRoundedIcon />
+          </ListItemIcon>
+          <ListItemText primary="設定" />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <HelpIcon />
+          </ListItemIcon>
+          <ListItemText primary="使い方" />
+        </ListItem>
+        <ListItem button onClick={logout}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="ログアウト" />
+        </ListItem>
       </List>
     </div>
   );

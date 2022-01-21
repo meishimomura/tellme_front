@@ -3,9 +3,6 @@ import { AppDispatch } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { makeStyles, useTheme } from "@mui/styles";
-import { createTheme } from "@mui/material/styles";
-import { Theme } from "@mui/material/styles";
 import styles from "features/common/DrawerHeader.module.css";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -28,13 +25,6 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import SensorDoorRoundedIcon from "@mui/icons-material/SensorDoorRounded";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  // button: {
-  //   padding: theme.spacing(1.5, 3),
-  //   margin: theme.spacing(3, 2),
-  // },
-}));
-
 const drawerWidth = 240;
 
 interface Props {
@@ -54,8 +44,6 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
-  const classes = useStyles();
 
   const current = {
     color: "#0679EB",
@@ -141,22 +129,24 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
           </NavLink>
         ))}
       </List>
-      <Button
-        // className={classes.button}
-        variant="contained"
-        size="small"
-        color="primary"
-        startIcon={<AddCircleOutlineIcon />}
-        onClick={() => {
-          // dispatch(
-          //   handleOpen({
-          //     formNumber: 1,
-          //   })
-          // );
-        }}
-      >
-        質問を投稿する
-      </Button>
+      <div className={styles.drawerHeader__userBox}>
+        <Button
+          variant="contained"
+          size="small"
+          color="primary"
+          startIcon={<AddCircleOutlineIcon />}
+          className={styles.drawerHeader__button}
+          onClick={() => {
+            // dispatch(
+            //   handleOpen({
+            //     formNumber: 1,
+            //   })
+            // );
+          }}
+        >
+          質問を投稿する
+        </Button>
+      </div>
       <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (

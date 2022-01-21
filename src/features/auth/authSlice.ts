@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import client from "lib/api/client";
 import Cookies from "js-cookie";
-import { SignInParams, User, loginUser, authState } from "../types";
+import { SignInParams, loginUser, authState } from "../types";
 
 export const fetchAsyncSignIn = createAsyncThunk(
   "auth/signin",
@@ -13,30 +13,24 @@ export const fetchAsyncSignIn = createAsyncThunk(
 );
 
 export const fetchAsyncGetUser = createAsyncThunk("auth/getUser", async () => {
-  const res = await client.get<loginUser>(
-    `${process.env.REACT_APP_API_URL}/auth/sessions/`,
-    {
-      headers: {
-        "access-token": `${Cookies.get("_access_token")}`,
-        client: `${Cookies.get("_client")}`,
-        uid: `${Cookies.get("_uid")}`,
-      },
-    }
-  );
+  const res = await client.get<loginUser>(`/auth/sessions/`, {
+    headers: {
+      "access-token": `${Cookies.get("_access_token")}`,
+      client: `${Cookies.get("_client")}`,
+      uid: `${Cookies.get("_uid")}`,
+    },
+  });
   return res.data;
 });
 
 export const fetchAsyncSignOut = createAsyncThunk("auth/sign_out", async () => {
-  const res = await client.delete(
-    `${process.env.REACT_APP_API_URL}/auth/sessions/`,
-    {
-      headers: {
-        "access-token": `${Cookies.get("_access_token")}`,
-        client: `${Cookies.get("_client")}`,
-        uid: `${Cookies.get("_uid")}`,
-      },
-    }
-  );
+  const res = await client.delete(`/auth/sign_out/`, {
+    headers: {
+      "access-token": `${Cookies.get("_access_token")}`,
+      client: `${Cookies.get("_client")}`,
+      uid: `${Cookies.get("_uid")}`,
+    },
+  });
   return res.data;
 });
 

@@ -18,3 +18,8 @@
   margin-block-start: 0.5em;
   margin-block-end: 0em;
 }
+.drawerHeader__button {
+  padding: 8px 30px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}

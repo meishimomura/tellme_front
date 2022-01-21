@@ -8,6 +8,10 @@ export interface SignUpParams {
   password: string;
   passwordConfirmation: string;
 }
+/*commonSlice*/
+export interface commonState {
+  fetchState: string;
+}
 /*authSlice.ts*/
 export interface SignInParams {
   email: string;

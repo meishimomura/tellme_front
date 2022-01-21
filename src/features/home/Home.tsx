@@ -1,12 +1,15 @@
-import React from "react";
-import App from "../../App";
+import React, { useEffect } from "react";
+import { AppDispatch } from "../../app/store";
+import { useSelector, useDispatch } from "react-redux";
+
+import Default from "features/common/Default";
 
 const Home: React.FC = () => {
   return (
     <div>
-      <App>
+      <Default>
         <div>あああ</div>
-      </App>
+      </Default>
     </div>
   );
 };

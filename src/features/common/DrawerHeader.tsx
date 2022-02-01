@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppDispatch } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { fetchAsyncSignOut } from "features/auth/authSlice";
+import { selectLoginUser, fetchAsyncSignOut } from "features/auth/authSlice";
+import { selectSubjects } from "features/common/commonSlice";
 
 import styles from "features/common/DrawerHeader.module.css";
 import AppBar from "@mui/material/AppBar";
@@ -62,23 +63,22 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
     display: "inline-block",
   };
 
-  // ダミー
-  const subjects = [
-    { subjectsId: 1, subjectsName: "1年国語" },
-    { subjectsId: 2, subjectsName: "1年数学" },
-    { subjectsId: 3, subjectsName: "1年理科" },
-    { subjectsId: 4, subjectsName: "1年社会" },
-    { subjectsId: 5, subjectsName: "1年英語" },
-  ];
+  const user = useSelector(selectLoginUser);
+  const subjects = useSelector(selectSubjects);
 
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <div className={styles.drawerHeader__userBox}>
-        <p className={styles.drawerHeader__name}>下村芽生</p>
-        <p className={styles.drawerHeader__scholl}>HAL名古屋</p>
-        <p className={styles.drawerHeader__scholl}>IW13A203</p>
+        <p className={styles.drawerHeader__name}>
+          {user.data.userName}
+          {!user.data.userIsStudent && <>先生</>}
+        </p>
+        <p className={styles.drawerHeader__scholl}>{user.data.schoolName}</p>
+        <p className={styles.drawerHeader__scholl}>
+          {user.data.userIsStudent && user.data.groupName}
+        </p>
       </div>
       <Divider />
       <List>
@@ -121,19 +121,19 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
             <ListItemText primary="学校からのお知らせ" />
           </ListItem>
         </NavLink>
-        {subjects.map((subject, index) => (
+        {subjects.data.map((subject, index) => (
           <NavLink
             exact
-            to={"/room/" + subject.subjectsId}
+            to={"/room/" + subject.id}
             className={styles.drawerHeader__nav}
             activeStyle={current}
             key={index}
           >
-            <ListItem button key={subject.subjectsId}>
+            <ListItem button key={subject.id}>
               <ListItemIcon>
                 <SensorDoorRoundedIcon />
               </ListItemIcon>
-              <ListItemText primary={subject.subjectsName + "の部屋"} />
+              <ListItemText primary={subject.subjectName + "の部屋"} />
             </ListItem>
           </NavLink>
         ))}

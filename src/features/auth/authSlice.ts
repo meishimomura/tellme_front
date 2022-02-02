@@ -2,18 +2,18 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 import client from "lib/api/client";
 import Cookies from "js-cookie";
-import { SignInParams, loginUser, authState } from "../types";
+import { signInParams, loginUser, authState } from "../types";
 
 export const fetchAsyncSignIn = createAsyncThunk(
   "auth/signin",
-  async (auth: SignInParams) => {
+  async (auth: signInParams) => {
     const res = await client.post<any>("auth/sign_in", auth);
     return res;
   }
 );
 
 export const fetchAsyncGetUser = createAsyncThunk("auth/getUser", async () => {
-  const res = await client.get<loginUser>(`/auth/sessions/`, {
+  const res = await client.get<loginUser>(`/users/`, {
     headers: {
       "access-token": `${Cookies.get("_access_token")}`,
       client: `${Cookies.get("_client")}`,
@@ -49,6 +49,9 @@ const initialState: authState = {
       allowPasswordChange: false,
       created_at: new Date("01/01/70 00:00:00"),
       updated_at: new Date("01/01/70 00:00:00"),
+      schoolName: "",
+      groupGrade: 0,
+      groupName: "",
     },
   },
 };

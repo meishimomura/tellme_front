@@ -3,12 +3,13 @@ import { AppDispatch } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
 
 import Default from "features/common/Default";
+import StudentHome from "./StudentHome";
 
 const Home: React.FC = () => {
   return (
     <div>
       <Default>
-        <div>あああ</div>
+        <StudentHome />
       </Default>
     </div>
   );

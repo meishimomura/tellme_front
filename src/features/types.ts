@@ -40,8 +40,8 @@ export interface User {
   groupId: number;
   userIsStudent: boolean;
   allowPasswordChange: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: string;
+  updatedAt: string;
   schoolName: string;
   groupGrade: number;
   groupName: string;
@@ -56,8 +56,8 @@ export interface User {
   groupId: number;
   userIsStudent: boolean;
   allowPasswordChange: boolean;
-  created_at: Date;
-  updated_at: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 export interface loginUser {
   is_login: boolean;
@@ -65,4 +65,60 @@ export interface loginUser {
 }
 export interface authState {
   loginUser: loginUser;
+}
+/*notifySelfSlice.ts*/
+export interface notifySelf {
+  id: number;
+  notifyType: number;
+  notifyIsChecked: boolean;
+  toUid: string;
+  fromUid: string;
+  commentId: number;
+  createdAt: string;
+  updatedAt: string;
+  fromUserName: string;
+}
+export interface readNotifySelf {
+  data: notifySelf[];
+}
+export interface notifySelfState {
+  notifySelves: readNotifySelf;
+}
+/*notificationSlice*/
+export interface notification {
+  id: number;
+  uid: string;
+  groupId: number;
+  notificationTitle: string;
+  notificationContent: string;
+  createdAt: string;
+  updatedAt: string;
+  userName: string;
+  studentUid: null | string;
+}
+export interface readNotification {
+  data: notification[];
+}
+export interface notificationState {
+  notifications: readNotification;
+}
+/*commentSlice*/
+export interface comment {
+  id: number;
+  subjectId: number;
+  uid: string;
+  parentCommentId: null | number;
+  commentContent: string;
+  commentIsSettled: boolean;
+  createdAt: string;
+  updatedAt: string;
+  userName: string;
+  userIsStudent: number;
+  subjectName: string;
+}
+export interface readComments {
+  data: comment[];
+}
+export interface commentState {
+  comments: readComments;
 }

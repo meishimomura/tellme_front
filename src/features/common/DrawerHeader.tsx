@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, ReactNode } from "react";
 import { AppDispatch } from "app/store";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
@@ -39,10 +39,10 @@ interface Props {
    * You won't need it on your project.
    */
   window?: () => Window;
-  children: any;
+  children?: ReactNode;
 }
 
-const DrawerHeader: React.FC<Props> = (props: Props) => {
+const DrawerHeader: React.FC<Props> = (props) => {
   const dispatch: AppDispatch = useDispatch();
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -186,8 +186,8 @@ const DrawerHeader: React.FC<Props> = (props: Props) => {
   return (
     <div>
       <Box sx={{ display: "flex" }}>
-        <CssBaseline />
         <AppBar
+          style={{ color: "#ffffff", backgroundColor: "#0679EB" }}
           position="fixed"
           sx={{
             width: { sm: `calc(100% - ${drawerWidth}px)` },

@@ -1,0 +1,19 @@
+.student_home__h2 {
+  text-align: center;
+  color: #666;
+}
+.student_home__h2_new {
+  color: #666;
+}
+.student_home__button {
+  margin-top: 20px;
+}
+.student_home__nav {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+.student_home__nav td {
+  border-bottom: none;
+}

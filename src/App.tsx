@@ -11,14 +11,33 @@ import Home from "features/home/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { StyledEngineProvider } from "@mui/material/styles";
+import { grey } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
     primary: {
       main: "#0679EB",
     },
+    default: {
+      main: grey.A400,
+    },
   },
 });
+
+declare module "@mui/material/styles" {
+  interface Palette {
+    default: Palette["primary"];
+  }
+  interface PaletteOptions {
+    default: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    default: true;
+  }
+}
 
 const App: React.FC = () => {
   return (

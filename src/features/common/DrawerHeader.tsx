@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import { selectLoginUser, fetchAsyncSignOut } from "features/auth/authSlice";
-import { selectSubjects } from "features/common/commonSlice";
+import { selectSubjects, handleModalOpen } from "features/common/commonSlice";
 
 import styles from "features/common/DrawerHeader.module.css";
 import AppBar from "@mui/material/AppBar";
@@ -146,11 +146,11 @@ const DrawerHeader: React.FC<Props> = (props) => {
           startIcon={<AddCircleOutlineIcon />}
           className={styles.drawerHeader__button}
           onClick={() => {
-            // dispatch(
-            //   handleOpen({
-            //     formNumber: 1,
-            //   })
-            // );
+            dispatch(
+              handleModalOpen({
+                formNumber: 1,
+              })
+            );
           }}
         >
           質問を投稿する

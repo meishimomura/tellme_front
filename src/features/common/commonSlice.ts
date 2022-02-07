@@ -4,7 +4,7 @@ import client from "lib/api/client";
 import Cookies from "js-cookie";
 import { REQUEST_STATE } from "../../constants";
 import { fetchAsyncSignIn, fetchAsyncGetUser } from "features/auth/authSlice";
-import { commonState, readSubject } from "features/types";
+import { commonState, readSubject, formState } from "features/types";
 
 export const fetchAsyncGetSubject = createAsyncThunk(
   "common/getSubject",
@@ -22,7 +22,6 @@ export const fetchAsyncGetSubject = createAsyncThunk(
 
 const initialState: commonState = {
   fetchState: REQUEST_STATE.INITIAL,
-  modalState: { modalOpen: false },
   subjects: {
     data: [
       {
@@ -32,12 +31,26 @@ const initialState: commonState = {
       },
     ],
   },
+  modalState: {
+    modalOpen: false,
+  },
+  formState: {
+    formNumber: 0,
+  },
 };
 
 export const commonSlice = createSlice({
   name: "common",
   initialState,
-  reducers: {},
+  reducers: {
+    handleModalClose: (state) => {
+      state.modalState.modalOpen = false;
+    },
+    handleModalOpen: (state, action: PayloadAction<formState>) => {
+      state.modalState.modalOpen = true;
+      state.formState = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAsyncSignIn.pending, (state) => {
       state.fetchState = REQUEST_STATE.LOADING;
@@ -66,6 +79,9 @@ export const commonSlice = createSlice({
   },
 });
 
+export const { handleModalClose, handleModalOpen } = commonSlice.actions;
 export const selectFetchState = (state: RootState) => state.common.fetchState;
 export const selectSubjects = (state: RootState) => state.common.subjects;
+export const selectModalState = (state: RootState) => state.common.modalState;
+export const selectFormState = (state: RootState) => state.common.formState;
 export default commonSlice.reducer;

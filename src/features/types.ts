@@ -12,6 +12,9 @@ export interface signUpParams {
 export interface modalState {
   modalOpen: boolean;
 }
+export interface formState {
+  formNumber: number;
+}
 export interface subjectState {
   id: number;
   subjectName: string;
@@ -22,8 +25,9 @@ export interface readSubject {
 }
 export interface commonState {
   fetchState: string;
-  modalState: modalState;
   subjects: readSubject;
+  modalState: modalState;
+  formState: formState;
 }
 /*authSlice.ts*/
 export interface signInParams {
@@ -113,12 +117,24 @@ export interface comment {
   createdAt: string;
   updatedAt: string;
   userName: string;
-  userIsStudent: number;
+  userIsStudent: boolean;
   subjectName: string;
+  subjectIsSecret: boolean;
+}
+export interface readComment {
+  data: comment;
 }
 export interface readComments {
   data: comment[];
 }
+export interface postComment {
+  subjectId: number;
+  uid: string;
+  parentCommentId: null | number;
+  commentContent: string;
+  commentIsSettled: boolean;
+}
 export interface commentState {
   comments: readComments;
+  editedComment: postComment;
 }

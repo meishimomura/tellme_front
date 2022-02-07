@@ -61,7 +61,7 @@ const StudentHome: React.FC = () => {
 
   const formatDatetime = (createdAt: string) => {
     return createdAt.replace(
-      /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).\d*Z/g,
+      /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d{3})\+(\d{2}):(\d{2})/g,
       "$1/$2/$3 $4:$5:$6"
     );
   };

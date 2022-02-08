@@ -7,6 +7,7 @@ import { Route, BrowserRouter, Redirect } from "react-router-dom";
 
 import Auth from "features/auth/Auth";
 import Home from "features/home/Home";
+import Comment from "features/comment/Comment";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -48,6 +49,7 @@ const App: React.FC = () => {
           <div>
             <Route exact path="/signin" component={Auth} />
             <Route exact path="/home" component={Home} />
+            <Route exact path="/comment/:commentId" component={Comment} />
           </div>
         </ThemeProvider>
       </StyledEngineProvider>

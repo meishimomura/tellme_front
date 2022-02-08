@@ -117,9 +117,11 @@ export interface comment {
   createdAt: string;
   updatedAt: string;
   userName: string;
-  userIsStudent: boolean;
+  userIsStudent: number;
   subjectName: string;
-  subjectIsSecret: boolean;
+  subjectIsSecret: number;
+  voteCount: number;
+  voted: number;
 }
 export interface readComment {
   data: comment;
@@ -134,7 +136,31 @@ export interface postComment {
   commentContent: string;
   commentIsSettled: boolean;
 }
+export interface putComment {
+  id: number;
+  subjectId: number;
+  uid: string;
+  parentCommentId: null | number;
+  commentContent: string;
+  commentIsSettled: boolean;
+}
+export interface vote {
+  id: number;
+  commentId: number;
+  uid: string;
+  created_at: string;
+  updated_at: string;
+}
+export interface postVote {
+  commentId: number;
+  uid: string;
+}
+export interface readVote {
+  data: vote;
+}
 export interface commentState {
   comments: readComments;
+  commentDetails: readComments;
+  textpearComments: readComments;
   editedComment: postComment;
 }

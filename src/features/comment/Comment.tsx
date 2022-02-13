@@ -52,6 +52,13 @@ const Comment: React.FC<CommentProps> = (props) => {
   const textpearComments = useSelector(selectTextpearComments);
   const editedComment = useSelector(selectEditedComment);
 
+  const formatDatetime = (createdAt: string) => {
+    return createdAt.replace(
+      /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}).(\d{3})\+(\d{2}):(\d{2})/g,
+      "$1/$2/$3 $4:$5:$6"
+    );
+  };
+
   useEffect(() => {
     const fetchBootLoader = async () => {
       await dispatch(fetchAsyncGetComment(commentId));
@@ -80,7 +87,7 @@ const Comment: React.FC<CommentProps> = (props) => {
             <div className={styles.comment__subject}>
               <p>{commentDetails.data[0].subjectName}</p>
             </div>
-            <p>{commentDetails.data[0].createdAt}</p>
+            <p>{formatDatetime(commentDetails.data[0].createdAt)}</p>
           </div>
           <div className={styles.comment__content_box}>
             <IconButton
@@ -147,8 +154,8 @@ const Comment: React.FC<CommentProps> = (props) => {
                 size="small"
                 color={
                   commentDetails.data[0].commentIsSettled
-                    ? "primary"
-                    : "default"
+                    ? "default"
+                    : "primary"
                 }
                 startIcon={<AutoAwesomeIcon />}
                 onClick={() => {
@@ -209,7 +216,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                   <div className={styles.comment__subject}>
                     <p>{textpearComment.subjectName}</p>
                   </div>
-                  <p>{textpearComment.createdAt}</p>
+                  <p>{formatDatetime(textpearComment.createdAt)}</p>
                 </div>
                 <div className={styles.comment__content_box}>
                   <IconButton

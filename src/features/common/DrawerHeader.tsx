@@ -153,7 +153,7 @@ const DrawerHeader: React.FC<Props> = (props) => {
             );
           }}
         >
-          質問を投稿する
+          {user.data.userIsStudent ? "質問を投稿する" : "お知らせを投稿"}
         </Button>
       </div>
       <Divider />

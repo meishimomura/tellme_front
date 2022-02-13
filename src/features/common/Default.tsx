@@ -12,6 +12,7 @@ import {
 
 import DrawerHeader from "features/common/DrawerHeader";
 import QuestionForm from "features/common/QuestionForm";
+import ReplyForm from "features/common/ReplyForm";
 
 import { useTheme } from "@material-ui/core/styles";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -57,8 +58,8 @@ const Default: React.FC = ({ children }) => {
     switch (formState.formNumber) {
       case 1:
         return <QuestionForm />;
-      // case 2:
-      //   return <ReplyForm />;
+      case 2:
+        return <ReplyForm />;
     }
   };
 

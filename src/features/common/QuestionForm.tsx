@@ -76,7 +76,7 @@ const QuestionForm = () => {
           {subjectsOptions}
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, width: 500 }}>
+      <FormControl sx={{ m: 1, width: 560 }}>
         <TextField
           id="outlined-multiline-static"
           label="質問内容"

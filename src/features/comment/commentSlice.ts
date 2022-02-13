@@ -239,9 +239,18 @@ export const commentSlice = createSlice({
           editedComment: initialState.editedComment,
           comments: {
             ...state.comments,
-            data: action.payload.data.subjectIsSecret
-              ? [...state.comments.data]
-              : [action.payload.data, ...state.comments.data],
+            data:
+              action.payload.data.parentCommentId !== null &&
+              action.payload.data.subjectIsSecret
+                ? [...state.comments.data]
+                : [action.payload.data, ...state.comments.data],
+          },
+          commentDetails: {
+            ...state.commentDetails,
+            data:
+              action.payload.data.parentCommentId === null
+                ? [...state.comments.data]
+                : [...state.commentDetails.data, action.payload.data],
           },
         };
       }

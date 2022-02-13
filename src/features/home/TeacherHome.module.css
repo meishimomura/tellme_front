@@ -1,0 +1,12 @@
+.teacher_home__h2 {
+  color: #666;
+}
+.teacher_home__nav {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+.teacher_home__nav td {
+  border-bottom: none;
+}

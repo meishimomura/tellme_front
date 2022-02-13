@@ -4,12 +4,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Default from "features/common/Default";
 import StudentHome from "./StudentHome";
+import TeacherHome from "./TeacherHome";
+
+import { selectLoginUser } from "features/auth/authSlice";
 
 const Home: React.FC = () => {
+  const loginUser = useSelector(selectLoginUser);
   return (
     <div>
       <Default>
-        <StudentHome />
+        {loginUser.data.userIsStudent ? <StudentHome /> : <TeacherHome />}
       </Default>
     </div>
   );

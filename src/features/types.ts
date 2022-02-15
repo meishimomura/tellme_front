@@ -14,6 +14,7 @@ export interface modalState {
 }
 export interface formState {
   formNumber: number;
+  targetImageSrc: string;
 }
 export interface subjectState {
   id: number;
@@ -122,6 +123,10 @@ export interface comment {
   subjectIsSecret: number;
   voteCount: number;
   voted: number;
+  commentImagePath: {
+    url: string;
+  };
+  commentImageText: string;
 }
 export interface readComment {
   data: comment;
@@ -135,6 +140,9 @@ export interface postComment {
   parentCommentId: null | number;
   commentContent: string;
   commentIsSettled: boolean;
+  commentImagePath: {
+    url?: string | null;
+  };
 }
 export interface putComment {
   id: number;

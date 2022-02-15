@@ -42,9 +42,10 @@ export const fetchAsyncGetCommentsTeacher = createAsyncThunk(
 
 export const fetchAsyncCreateComment = createAsyncThunk(
   "comment/createComment",
-  async (comment: postComment) => {
-    const res = await client.post<readComment>(`/comments/`, comment, {
+  async (uploadData: FormData | postComment) => {
+    const res = await client.post<readComment>(`/comments/`, uploadData, {
       headers: {
+        "Content-Type": "multipart/form-data",
         "access-token": `${Cookies.get("_access_token")}`,
         client: `${Cookies.get("_client")}`,
         uid: `${Cookies.get("_uid")}`,
@@ -146,6 +147,8 @@ const initialState: commentState = {
         subjectIsSecret: 0,
         voteCount: 0,
         voted: 0,
+        commentImagePath: { url: "" },
+        commentImageText: "",
       },
     ],
   },
@@ -166,6 +169,8 @@ const initialState: commentState = {
         subjectIsSecret: 0,
         voteCount: 0,
         voted: 0,
+        commentImagePath: { url: "" },
+        commentImageText: "",
       },
     ],
   },
@@ -186,6 +191,8 @@ const initialState: commentState = {
         subjectIsSecret: 0,
         voteCount: 0,
         voted: 0,
+        commentImagePath: { url: "" },
+        commentImageText: "",
       },
     ],
   },
@@ -195,6 +202,7 @@ const initialState: commentState = {
     parentCommentId: null,
     commentContent: "",
     commentIsSettled: false,
+    commentImagePath: { url: null },
   },
 };
 

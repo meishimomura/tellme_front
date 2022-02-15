@@ -63,3 +63,20 @@
 .comment__h2 {
   color: #666;
 }
+.comment__image {
+  cursor: pointer;
+  transition: 0.5s;
+}
+.comment__image:hover {
+  opacity: 0.5;
+  transition: 0.5s;
+}
+.comment__nav {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: 0.5s;
+}
+.comment__nav:hover {
+  opacity: 0.8;
+}

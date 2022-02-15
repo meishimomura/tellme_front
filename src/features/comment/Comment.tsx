@@ -18,6 +18,7 @@ import {
 import { selectLoginUser } from "features/auth/authSlice";
 import { handleModalOpen } from "features/common/commonSlice";
 
+import { Link } from "react-router-dom";
 import styles from "./Comment.module.css";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -26,6 +27,9 @@ import IconButton from "@mui/material/IconButton";
 import StarsIcon from "@mui/icons-material/Stars";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
+import ButtonBase from "@mui/material/ButtonBase";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
@@ -35,6 +39,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     padding: theme.spacing(3),
     marginBottom: theme.spacing(8),
+  },
+  cardAction: {
+    display: "block",
+    textAlign: "initial",
   },
 }));
 
@@ -120,6 +128,30 @@ const Comment: React.FC<CommentProps> = (props) => {
             </div>
             <p>{commentDetails.data[0].commentContent}</p>
           </div>
+          {commentDetails.data[0].commentImagePath?.url ? (
+            <Card sx={{ maxWidth: 345 }}>
+              <ButtonBase
+                className={classes.cardAction}
+                onClick={() => {
+                  dispatch(
+                    handleModalOpen({
+                      formNumber: 3,
+                      targetImageSrc:
+                        commentDetails.data[0].commentImagePath.url,
+                    })
+                  );
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="250"
+                  src={commentDetails.data[0].commentImagePath.url}
+                  alt="image"
+                  className={styles.comment__image}
+                />
+              </ButtonBase>
+            </Card>
+          ) : null}
           {!loginUser.data.userIsStudent && (
             <Button
               className={classes.button}
@@ -139,6 +171,7 @@ const Comment: React.FC<CommentProps> = (props) => {
                 dispatch(
                   handleModalOpen({
                     formNumber: 2,
+                    targetImageSrc: "",
                   })
                 );
               }}
@@ -195,64 +228,93 @@ const Comment: React.FC<CommentProps> = (props) => {
             ))}
           </>
         )}
-        {textpearComments.data.length > 0 && (
+        {textpearComments.data.length > 0 ? (
           <>
             <h2 className={styles.comment__h2}>似ている投稿</h2>
             {textpearComments.data.map((textpearComment) => (
               <Paper className={classes.paper}>
-                <div className={styles.comment__head}>
-                  <div
-                    className={[
-                      styles.comment__answer,
-                      textpearComment.commentIsSettled
-                        ? styles.comment__answered
-                        : styles.comment__not_answered,
-                    ].join(" ")}
-                  >
-                    <p>
-                      {textpearComment.commentIsSettled ? "解決済" : "未解決"}
-                    </p>
+                <Link
+                  to={"/comment/" + textpearComment.id}
+                  className={styles.comment__nav}
+                >
+                  <div className={styles.comment__head}>
+                    <div
+                      className={[
+                        styles.comment__answer,
+                        textpearComment.commentIsSettled
+                          ? styles.comment__answered
+                          : styles.comment__not_answered,
+                      ].join(" ")}
+                    >
+                      <p>
+                        {textpearComment.commentIsSettled ? "解決済" : "未解決"}
+                      </p>
+                    </div>
+                    <div className={styles.comment__subject}>
+                      <p>{textpearComment.subjectName}</p>
+                    </div>
+                    <p>{formatDatetime(textpearComment.createdAt)}</p>
                   </div>
-                  <div className={styles.comment__subject}>
-                    <p>{textpearComment.subjectName}</p>
+                  <div className={styles.comment__content_box}>
+                    <IconButton
+                      color={textpearComment.voted ? "primary" : "default"}
+                      className={styles.comment__vote_button}
+                      aria-label="vote"
+                      onClick={() => {
+                        textpearComment.voted
+                          ? dispatch(fetchAsyncDeleteVote(textpearComment.id))
+                          : dispatch(
+                              fetchAsyncCreateVote({
+                                commentId: textpearComment.id,
+                                uid: loginUser.data.uid,
+                              })
+                            );
+                      }}
+                    >
+                      <StarsIcon />
+                    </IconButton>
+                    <div
+                      className={[
+                        styles.comment__vote_box,
+                        textpearComment.voted && styles.comment__voted,
+                      ].join(" ")}
+                    >
+                      <p className={styles.comment__vote_number}>
+                        {textpearComment.voteCount}
+                      </p>
+                      <p>知りたい！</p>
+                    </div>
+                    <p>{textpearComment.commentContent}</p>
                   </div>
-                  <p>{formatDatetime(textpearComment.createdAt)}</p>
-                </div>
-                <div className={styles.comment__content_box}>
-                  <IconButton
-                    color={textpearComment.voted ? "primary" : "default"}
-                    className={styles.comment__vote_button}
-                    aria-label="vote"
-                    onClick={() => {
-                      textpearComment.voted
-                        ? dispatch(fetchAsyncDeleteVote(textpearComment.id))
-                        : dispatch(
-                            fetchAsyncCreateVote({
-                              commentId: textpearComment.id,
-                              uid: loginUser.data.uid,
+                  {textpearComment.commentImagePath?.url ? (
+                    <Card sx={{ maxWidth: 345 }}>
+                      <ButtonBase
+                        className={classes.cardAction}
+                        onClick={() => {
+                          dispatch(
+                            handleModalOpen({
+                              formNumber: 3,
+                              targetImageSrc:
+                                textpearComment.commentImagePath.url,
                             })
                           );
-                    }}
-                  >
-                    <StarsIcon />
-                  </IconButton>
-                  <div
-                    className={[
-                      styles.comment__vote_box,
-                      textpearComment.voted && styles.comment__voted,
-                    ].join(" ")}
-                  >
-                    <p className={styles.comment__vote_number}>
-                      {textpearComment.voteCount}
-                    </p>
-                    <p>知りたい！</p>
-                  </div>
-                  <p>{textpearComment.commentContent}</p>
-                </div>
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          height="250"
+                          src={textpearComment.commentImagePath.url}
+                          alt="image"
+                          className={styles.comment__image}
+                        />
+                      </ButtonBase>
+                    </Card>
+                  ) : null}
+                </Link>
               </Paper>
             ))}
           </>
-        )}
+        ) : null}
       </div>
     </Default>
   );

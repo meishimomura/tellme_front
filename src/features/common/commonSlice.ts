@@ -36,6 +36,7 @@ const initialState: commonState = {
   },
   formState: {
     formNumber: 0,
+    targetImageSrc: "",
   },
 };
 

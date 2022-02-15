@@ -9,10 +9,15 @@ import {
   fetchAsyncGetSubject,
   handleModalClose,
 } from "features/common/commonSlice";
+import {
+  selectEditedComment,
+  editComment,
+} from "features/comment/commentSlice";
 
 import DrawerHeader from "features/common/DrawerHeader";
 import QuestionForm from "features/common/QuestionForm";
 import ReplyForm from "features/common/ReplyForm";
+import ImageUp from "features/common/ImageUp";
 
 import { useTheme } from "@material-ui/core/styles";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -47,6 +52,7 @@ const Default: React.FC = ({ children }) => {
 
   const modalState = useSelector(selectModalState);
   const formState = useSelector(selectFormState);
+  const editedComment = useSelector(selectEditedComment);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalStyle] = useState(getModalStyle);
@@ -60,6 +66,8 @@ const Default: React.FC = ({ children }) => {
         return <QuestionForm />;
       case 2:
         return <ReplyForm />;
+      case 3:
+        return <ImageUp />;
     }
   };
 
@@ -74,7 +82,23 @@ const Default: React.FC = ({ children }) => {
   return (
     <div>
       <DrawerHeader>{children}</DrawerHeader>
-      <Modal open={modalOpen} onClose={() => dispatch(handleModalClose())}>
+      <Modal
+        open={modalOpen}
+        onClose={() => {
+          dispatch(handleModalClose());
+          dispatch(
+            editComment({
+              ...editedComment,
+              subjectId: 0,
+              uid: "",
+              parentCommentId: null,
+              commentContent: "",
+              commentIsSettled: false,
+              commentImagePath: { url: null },
+            })
+          );
+        }}
+      >
         <div style={modalStyle} className={classes.paper}>
           {formComponent()}
         </div>

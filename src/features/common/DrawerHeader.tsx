@@ -149,6 +149,7 @@ const DrawerHeader: React.FC<Props> = (props) => {
             dispatch(
               handleModalOpen({
                 formNumber: 1,
+                targetImageSrc: "",
               })
             );
           }}

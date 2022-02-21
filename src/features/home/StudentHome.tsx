@@ -32,8 +32,11 @@ import Button from "@mui/material/Button";
 
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
-    padding: theme.spacing(1.5, 3),
+    padding: theme.spacing(1, 3),
     margin: theme.spacing(3, 0),
+    backgroundColor: "#3daafb",
+    color: "#fff",
+    fontWeight: "bold",
   },
   icon: {
     padding: theme.spacing(0, 1, 0, 0),
@@ -87,7 +90,7 @@ const StudentHome: React.FC = () => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} lg={6}>
           <h2 className={styles.student_home__h2}>通知</h2>
           <Paper className={classes.paper}>
             <TableContainer>
@@ -99,10 +102,20 @@ const StudentHome: React.FC = () => {
                         to={"/comment/" + row.id}
                         className={styles.student_home__nav}
                       >
-                        <TableCell>
-                          {row.notifyIsChecked ? "　　　" : "未開封"}
+                        <TableCell
+                          className={styles.student_home__not_checkcell}
+                        >
+                          <div
+                            className={
+                              row.notifyIsChecked
+                                ? styles.student_home__checked
+                                : styles.student_home__not_check
+                            }
+                          ></div>
                         </TableCell>
-                        <TableCell>{formatDatetime(row.createdAt)}</TableCell>
+                        <TableCell>
+                          <span>{formatDatetime(row.createdAt)}</span>
+                        </TableCell>
                         <TableCell>
                           あなたの投稿に{row.fromUserName}先生が回答しました。
                         </TableCell>
@@ -115,10 +128,6 @@ const StudentHome: React.FC = () => {
           </Paper>
           <Button
             variant="contained"
-            style={{
-              backgroundColor: "#F5EA91",
-              color: "#707070",
-            }}
             className={classes.button}
             onClick={() => {}}
           >
@@ -126,7 +135,7 @@ const StudentHome: React.FC = () => {
             通知一覧
           </Button>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} lg={6}>
           <h2 className={styles.student_home__h2}>学校からのお知らせ</h2>
           <Paper className={classes.paper}>
             <TableContainer>
@@ -138,8 +147,16 @@ const StudentHome: React.FC = () => {
                         to={"/comment/" + row.id}
                         className={styles.student_home__nav}
                       >
-                        <TableCell>
-                          {row.studentUid !== null ? "　　　" : "未開封"}
+                        <TableCell
+                          className={styles.student_home__not_checkcell}
+                        >
+                          <div
+                            className={
+                              row.studentUid !== null
+                                ? styles.student_home__checked
+                                : styles.student_home__not_check
+                            }
+                          ></div>
                         </TableCell>
                         <TableCell>{formatDatetime(row.createdAt)}</TableCell>
                         <TableCell>{row.userName}先生</TableCell>
@@ -153,10 +170,6 @@ const StudentHome: React.FC = () => {
           </Paper>
           <Button
             variant="contained"
-            style={{
-              backgroundColor: "#F5EA91",
-              color: "#707070",
-            }}
             className={classes.button}
             onClick={() => {}}
           >
@@ -165,9 +178,9 @@ const StudentHome: React.FC = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container className={classes.new}>
+      <Grid container className={styles.student_home__new}>
         <Grid item xs={12}>
-          <h2 className={styles.student_home__h2_new}>新着の投稿</h2>
+          <h2 className={styles.student_home__h2}>新着の投稿</h2>
           <Paper className={classes.paper}>
             <TableContainer>
               <Table>
@@ -179,10 +192,25 @@ const StudentHome: React.FC = () => {
                         className={styles.student_home__nav}
                       >
                         <TableCell>
-                          {row.commentIsSettled ? "解決済" : "未解決"}
+                          <div
+                            className={[
+                              styles.student_home__answer,
+                              row.commentIsSettled
+                                ? styles.student_home__answered
+                                : styles.student_home__not_answered,
+                            ].join(" ")}
+                          >
+                            <span>
+                              {row.commentIsSettled ? "解決済" : "未解決"}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <div className={styles.student_home__subject}>
+                            <span>{row.subjectName}</span>
+                          </div>
                         </TableCell>
                         <TableCell>{formatDatetime(row.createdAt)}</TableCell>
-                        <TableCell>{row.subjectName}</TableCell>
                         <TableCell>{omit(row.commentContent)}</TableCell>
                       </Link>
                     </TableRow>
@@ -193,10 +221,6 @@ const StudentHome: React.FC = () => {
           </Paper>
           <Button
             variant="contained"
-            style={{
-              backgroundColor: "#F5EA91",
-              color: "#707070",
-            }}
             className={classes.button}
             onClick={() => {}}
           >

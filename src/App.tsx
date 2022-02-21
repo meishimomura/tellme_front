@@ -17,10 +17,19 @@ import { grey } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#0679EB",
+      main: "#3da9fc",
     },
     default: {
       main: grey.A400,
+    },
+  },
+  components: {
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: "initial",
+        },
+      },
     },
   },
 });

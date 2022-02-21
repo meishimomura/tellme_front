@@ -26,6 +26,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const useStyles = makeStyles((theme: Theme) => ({
   button: {
     margin: theme.spacing(3),
+    color: "#fff",
   },
   box: {
     margin: "1rem 0",
@@ -159,20 +160,23 @@ const QuestionForm = () => {
           画像アップロード
         </UploadButton>
       </FormControl>
-      {preview ? (
-        <Box
-          sx={{ ...borderStyles, borderRadius: 1, borderColor: "grey.400" }}
-          className={classes.box}
-        >
-          <IconButton color="inherit" onClick={() => setPreview("")}>
-            <CancelIcon />
-          </IconButton>
-          <img src={preview} alt="preview img" className={classes.preview} />
-        </Box>
-      ) : null}
+      <FormControl sx={{ m: 1, width: 500 }}>
+        {preview ? (
+          <Box
+            sx={{ ...borderStyles, borderRadius: 1, borderColor: "grey.400" }}
+            className={classes.box}
+          >
+            <IconButton color="inherit" onClick={() => setPreview("")}>
+              <CancelIcon />
+            </IconButton>
+            <img src={preview} alt="preview img" className={classes.preview} />
+          </Box>
+        ) : null}
+      </FormControl>
       <Button
         variant="contained"
         color="default"
+        className={styles.question_form__cancel}
         onClick={() => {
           dispatch(handleModalClose());
           dispatch(

@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   input: {
     display: "none",
   },
+  button: {
+    color: "#fff",
+  },
 }));
 
 interface Props {
@@ -28,7 +31,12 @@ export const UploadButton: React.FC<Props> = (props) => {
         type="file"
         onChange={props.onChange}
       />
-      <Button variant="contained" component="span" {...props}>
+      <Button
+        variant="contained"
+        component="span"
+        className={classes.button}
+        {...props}
+      >
         {props.children}
       </Button>
     </label>

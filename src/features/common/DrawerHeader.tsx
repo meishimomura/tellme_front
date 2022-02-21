@@ -56,9 +56,8 @@ const DrawerHeader: React.FC<Props> = (props) => {
   };
 
   const current = {
-    color: "#0679EB",
     textDecoration: "none",
-    background: grey[100],
+    background: "rgb(61 170 251 / 11%)",
     width: "100%",
     display: "inline-block",
   };
@@ -188,7 +187,7 @@ const DrawerHeader: React.FC<Props> = (props) => {
     <div>
       <Box sx={{ display: "flex" }}>
         <AppBar
-          style={{ color: "#ffffff", backgroundColor: "#0679EB" }}
+          style={{ color: "#ffffff", backgroundColor: "#3da9fc" }}
           position="fixed"
           sx={{
             width: { sm: `calc(100% - ${drawerWidth}px)` },

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
@@ -11,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 import { fetchAsyncSignIn } from "./authSlice";
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -49,7 +48,6 @@ export const Auth: React.FC = () => {
   return (
     <div>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div className={classes.paper}>
           <h1>{/* <img src={Logo} alt="ロゴ" width="300px" /> */}</h1>
           <Typography component="h1" variant="h5">

@@ -3,7 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useSelector } from "react-redux";
 
-import { Route, BrowserRouter, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Auth from "features/auth/Auth";
 import Home from "features/home/Home";
@@ -47,9 +47,12 @@ const App: React.FC = () => {
         <CssBaseline />
         <ThemeProvider theme={theme}>
           <div>
-            <Route exact path="/signin" component={Auth} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/comment/:commentId" component={Comment} />
+            <Switch>
+              <Route path="/signin" component={Auth} />
+              <Route path="/home" component={Home} />
+              <Route path="/comment/:commentId" component={Comment} />
+              <Route component={Auth} />
+            </Switch>
           </div>
         </ThemeProvider>
       </StyledEngineProvider>

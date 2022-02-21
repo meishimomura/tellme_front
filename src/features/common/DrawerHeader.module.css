@@ -5,7 +5,7 @@
 .drawerHeader__userBox {
   text-align: left;
   padding: 23px;
-  color: #666;
+  color: rgba(0, 0, 0, 0.87);
 }
 .drawerHeader__name {
   font-size: 1.2rem;
@@ -22,4 +22,5 @@
   padding: 8px 30px;
   margin-bottom: 15px;
   font-weight: bold;
+  color: #fff;
 }

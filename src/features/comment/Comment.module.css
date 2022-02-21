@@ -29,10 +29,10 @@
 .comment__subject {
   display: inline-block;
   padding: 0 12px;
-  color: #0674e2;
+  color: #3daafb;
   background-color: #f2f8fe;
   border-radius: 8px;
-  border: solid 1px #0674e2;
+  border: solid 1px #3daafb;
   margin-right: 10px;
 }
 .comment__content_box {

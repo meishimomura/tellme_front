@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     padding: theme.spacing(1, 3),
     margin: theme.spacing(2),
+    color: "#fff",
+    fontWeight: "bold",
   },
   paper: {
     padding: theme.spacing(3),
@@ -214,18 +216,20 @@ const Comment: React.FC<CommentProps> = (props) => {
           <p>回答はまだありません</p>
         ) : (
           <>
-            {commentDetails.data.map((comment) => (
-              <Paper className={classes.paper}>
-                {!comment.userIsStudent && (
-                  <div className={styles.comment__head}>
-                    <p>{comment.userName}先生</p>
+            {commentDetails.data.map((comment, index) =>
+              index === 0 ? null : (
+                <Paper className={classes.paper}>
+                  {!comment.userIsStudent && (
+                    <div className={styles.comment__head}>
+                      <p>{comment.userName}先生</p>
+                    </div>
+                  )}
+                  <div className={styles.comment__content_box}>
+                    <p>{comment.commentContent}</p>
                   </div>
-                )}
-                <div className={styles.comment__content_box}>
-                  <p>{comment.commentContent}</p>
-                </div>
-              </Paper>
-            ))}
+                </Paper>
+              )
+            )}
           </>
         )}
         {textpearComments.data.length > 0 ? (

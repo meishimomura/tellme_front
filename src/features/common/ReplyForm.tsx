@@ -33,6 +33,20 @@ const ReplyForm = () => {
     dispatch(editComment({ ...editedComment, commentContent: value }));
   };
 
+  const createFormData = (): FormData => {
+    const uploadData = new FormData();
+    uploadData.append("subjectId", String(editedComment.subjectId));
+    uploadData.append("uid", editedComment.uid);
+    uploadData.append("parentCommentId", String(editedComment.parentCommentId));
+    uploadData.append("commentContent", editedComment.commentContent);
+    uploadData.append(
+      "commentIsSettled",
+      String(editedComment.commentIsSettled)
+    );
+
+    return uploadData;
+  };
+
   return (
     <>
       <h2 className={styles.reply_form__h2}>返信</h2>
@@ -61,7 +75,8 @@ const ReplyForm = () => {
         className={classes.button}
         disabled={isDisabled}
         onClick={() => {
-          dispatch(fetchAsyncCreateComment(editedComment));
+          const data = createFormData();
+          dispatch(fetchAsyncCreateComment(data));
           dispatch(handleModalClose());
         }}
       >

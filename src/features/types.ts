@@ -79,15 +79,19 @@ export interface notifySelf {
   toUid: string;
   fromUid: string;
   commentId: number;
+  parentCommentId: number;
   createdAt: string;
   updatedAt: string;
   fromUserName: string;
 }
 export interface readNotifySelf {
+  data: notifySelf;
+}
+export interface readNotifySelves {
   data: notifySelf[];
 }
 export interface notifySelfState {
-  notifySelves: readNotifySelf;
+  notifySelves: readNotifySelves;
 }
 /*notificationSlice*/
 export interface notification {

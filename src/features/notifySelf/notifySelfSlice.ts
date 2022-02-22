@@ -2,18 +2,41 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import client from "lib/api/client";
 import Cookies from "js-cookie";
-import { readNotifySelf, notifySelfState } from "features/types";
+import {
+  notifySelf,
+  readNotifySelf,
+  readNotifySelves,
+  notifySelfState,
+} from "features/types";
 
 export const fetchAsyncGetNotifySelves = createAsyncThunk(
   "notifySelf/getNotifySelves",
   async () => {
-    const res = await client.get<readNotifySelf>(`/notify_selves/user/`, {
+    const res = await client.get<readNotifySelves>(`/notify_selves/user/`, {
       headers: {
         "access-token": `${Cookies.get("_access_token")}`,
         client: `${Cookies.get("_client")}`,
         uid: `${Cookies.get("_uid")}`,
       },
     });
+    return res.data;
+  }
+);
+
+export const fetchAsyncUpdateNotifySelf = createAsyncThunk(
+  "notifySelf/updateNotifySelf",
+  async (notifySelf: notifySelf) => {
+    const res = await client.put<readNotifySelf>(
+      `/notify_selves/${notifySelf.id}`,
+      notifySelf,
+      {
+        headers: {
+          "access-token": `${Cookies.get("_access_token")}`,
+          client: `${Cookies.get("_client")}`,
+          uid: `${Cookies.get("_uid")}`,
+        },
+      }
+    );
     return res.data;
   }
 );
@@ -28,6 +51,7 @@ const initialState: notifySelfState = {
         toUid: "",
         fromUid: "",
         commentId: 0,
+        parentCommentId: 0,
         createdAt: "",
         updatedAt: "",
         fromUserName: "",
@@ -43,7 +67,7 @@ export const notifySelfSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncGetNotifySelves.fulfilled,
-      (state, action: PayloadAction<readNotifySelf>) => {
+      (state, action: PayloadAction<readNotifySelves>) => {
         return {
           ...state,
           notifySelves: action.payload,
@@ -51,6 +75,25 @@ export const notifySelfSlice = createSlice({
       }
     );
     builder.addCase(fetchAsyncGetNotifySelves.rejected, () => {
+      window.location.href = "/signin";
+    });
+    builder.addCase(
+      fetchAsyncUpdateNotifySelf.fulfilled,
+      (state, action: PayloadAction<readNotifySelf>) => {
+        return {
+          ...state,
+          notifySelves: {
+            ...state.notifySelves,
+            data: state.notifySelves.data.map((notifySelf) =>
+              notifySelf.id === action.payload.data.id
+                ? action.payload.data
+                : notifySelf
+            ),
+          },
+        };
+      }
+    );
+    builder.addCase(fetchAsyncUpdateNotifySelf.rejected, () => {
       window.location.href = "/signin";
     });
   },

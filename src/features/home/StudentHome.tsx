@@ -12,6 +12,7 @@ import {
 } from "features/notification/notificationSlice";
 import {
   fetchAsyncGetNotifySelves,
+  fetchAsyncUpdateNotifySelf,
   selectNotifySelves,
 } from "features/notifySelf/notifySelfSlice";
 
@@ -97,9 +98,28 @@ const StudentHome: React.FC = () => {
               <Table>
                 <TableBody>
                   {displasyNotifySelves.map((row, rowIndex) => (
-                    <TableRow key={rowIndex} hover>
+                    <TableRow
+                      key={rowIndex}
+                      hover
+                      onClick={() => {
+                        dispatch(
+                          fetchAsyncUpdateNotifySelf({
+                            id: row.id,
+                            notifyType: 1,
+                            notifyIsChecked: true,
+                            toUid: row.toUid,
+                            fromUid: row.fromUid,
+                            commentId: row.commentId,
+                            parentCommentId: row.parentCommentId,
+                            createdAt: row.createdAt,
+                            updatedAt: row.updatedAt,
+                            fromUserName: row.fromUserName,
+                          })
+                        );
+                      }}
+                    >
                       <Link
-                        to={"/comment/" + row.id}
+                        to={"/comment/" + row.parentCommentId}
                         className={styles.student_home__nav}
                       >
                         <TableCell

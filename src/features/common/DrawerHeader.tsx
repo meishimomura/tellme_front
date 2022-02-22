@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 
 import { selectLoginUser, fetchAsyncSignOut } from "features/auth/authSlice";
 import { selectSubjects, handleModalOpen } from "features/common/commonSlice";
+import { selectNotifications } from "features/notification/notificationSlice";
+import { selectNotifySelves } from "features/notifySelf/notifySelfSlice";
 
 import styles from "features/common/DrawerHeader.module.css";
 import AppBar from "@mui/material/AppBar";
@@ -15,6 +17,7 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import grey from "@material-ui/core/colors/grey";
 import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -64,6 +67,16 @@ const DrawerHeader: React.FC<Props> = (props) => {
 
   const user = useSelector(selectLoginUser);
   const subjects = useSelector(selectSubjects);
+  const notifySelves = useSelector(selectNotifySelves);
+  const notifications = useSelector(selectNotifications);
+
+  const notifySelvesCount = notifySelves.data.reduce((prev, item) => {
+    return prev + (item.notifyIsChecked ? 0 : 1);
+  }, 0);
+
+  const notificationsCount = notifications.data.reduce((prev, item) => {
+    return prev + (item.studentUid !== null ? 0 : 1);
+  }, 0);
 
   const drawer = (
     <div>
@@ -102,7 +115,9 @@ const DrawerHeader: React.FC<Props> = (props) => {
         >
           <ListItem button>
             <ListItemIcon>
-              <MailOutlineIcon />
+              <Badge badgeContent={notifySelvesCount} color="secondary">
+                <MailOutlineIcon />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary="通知" />
           </ListItem>
@@ -115,7 +130,9 @@ const DrawerHeader: React.FC<Props> = (props) => {
         >
           <ListItem button>
             <ListItemIcon>
-              <NotificationsRoundedIcon />
+              <Badge badgeContent={notificationsCount} color="secondary">
+                <NotificationsRoundedIcon />
+              </Badge>
             </ListItemIcon>
             <ListItemText primary="学校からのお知らせ" />
           </ListItem>

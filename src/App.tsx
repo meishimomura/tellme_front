@@ -22,6 +22,9 @@ const theme = createTheme({
     default: {
       main: grey.A400,
     },
+    secondary: {
+      main: "#ef4565",
+    },
   },
   components: {
     MuiListItemIcon: {
